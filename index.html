@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>İyi Bayramlar</title>
+  <!-- GSAP kütüphanesi dönen yazılar için gereklidir -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, #1c1c1c 0%, #000000 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      font-family: 'Courier New', monospace;
+    }
+
+    .container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* SVG’ler, yazı halkaları için */
+    svg {
+      position: absolute;
+      width: min(95vw, 95vh);
+      height: min(95vw, 95vh);
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Yazının kalınlığı ve boyutu */
+    text {
+      font-weight: 900;
+      font-size: calc(min(95vw, 95vh) * 0.12);
+      text-shadow: 2px 2px 4px black;
+    }
+
+    /* İçteki resim kutusu (%80 boyut) */
+    .image-box {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: min(80vw, 80vh);
+      height: min(80vw, 80vh);
+      transform: translate(-50%, -50%);
+      background: rgba(0,0,0,0.5);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.3);
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    /* Resim objesi */
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Ortada dönen resimleri barındıran kutu -->
+    <div class="image-box">
+      <img id="bayramImage" alt="Bayram Resmi">
+    </div>
+
+    <!-- Kırmızı yazı halkası (Yarıçap: 240) -->
+    <svg viewBox="0 0 500 500">
+      <defs>
+        <path 
+          id="circle1" 
+          d="M250,250 m-240,0 a240,240 0 1,1 480,0 a240,240 0 1,1 -480,0" 
+        />
+      </defs>
+      <text fill="red">
+        <textPath id="redText" xlink:href="#circle1" startOffset="0%">
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR -
+        </textPath>
+      </text>
+    </svg>
+
+    <!-- Yeşil yazı halkası (Yarıçap: 200) -->
+    <svg viewBox="0 0 500 500">
+      <defs>
+        <path 
+          id="circle2" 
+          d="M250,250 m-200,0 a200,200 0 1,1 400,0 a200,200 0 1,1 -400,0" 
+        />
+      </defs>
+      <text fill="lime">
+        <textPath id="greenText" xlink:href="#circle2" startOffset="0%">
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
+          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR -
+        </textPath>
+      </text>
+    </svg>
+  </div>
+
+  <script>
+    /*
+      Aşağıdaki bağlantıları, GitHub repo’nuzdaki /pics klasöründe
+      yer alan resim dosyalarının “Raw” URL’leri ile birebir değiştirmeniz gerekiyor.
+      Örnek olarak:
+      https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/XLpNcLt-shaun-the-sheep.jpg
+    */
+    const images = [
+      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/XLpNcLt-shaun-the-sheep.jpg",
+      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/movie-shaun-the-sheep.jpg",
+      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper.jpg",
+      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20%281%29.jpg",
+      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20%282%29.jpg",
+      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20%283%29.jpg"
+    ];
+
+    let index = 0;
+    const imgEl = document.getElementById("bayramImage");
+
+    function loadAndStart() {
+      let loadedCount = 0;
+      // Tüm resimler yüklendiğinde startSlideshow() çağrılacak
+      images.forEach(src => {
+        const imgObj = new Image();
+        imgObj.onload = () => {
+          loadedCount++;
+          if (loadedCount === images.length) {
+            startSlideshow();
+          }
+        };
+        imgObj.src = src;
+      });
+    }
+
+    function startSlideshow() {
+      index = 0;
+      imgEl.src = images[index];
+      setInterval(() => {
+        index = (index + 1) % images.length;
+        imgEl.src = images[index];
+      }, 3000);
+    }
+
+    loadAndStart();
+
+    // Kırmızı halkayı saat yönünde döndür
+    gsap.to("#redText", {
+      attr: { startOffset: "-100%" },
+      duration: 15,
+      repeat: -1,
+      ease: "linear"
+    });
+
+    // Yeşil halkayı ters yönde döndür
+    gsap.to("#greenText", {
+      attr: { startOffset: "100%" },
+      duration: 15,
+      repeat: -1,
+      ease: "linear"
+    });
+  </script>
+</body>
+</html>
