@@ -4,10 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>İyi Bayramlar</title>
-
-  <!-- GSAP, dönen yazı animasyonları için -->
+  <!-- GSAP: dönen yazı animasyonu için -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-
   <style>
     html, body {
       margin: 0;
@@ -28,7 +26,7 @@
       height: 100vh;
     }
 
-    /* SVG’ler: dönen yazı halkaları */
+    /* Dönen yazı halkaları */
     svg {
       position: absolute;
       width: min(95vw, 95vh);
@@ -43,18 +41,17 @@
     /* Yazı boyutu ve kalınlığı */
     text {
       font-weight: 900;
-      /* %12 çarpanıyla büyük font */
       font-size: calc(min(95vw, 95vh) * 0.12);
       text-shadow: 2px 2px 4px black;
     }
 
-    /* Orta resim kutusu (%80 boyut) */
+    /* Ortada resim kutusu (%90 boyut) */
     .image-box {
       position: absolute;
       top: 50%;
       left: 50%;
-      width: min(80vw, 80vh);
-      height: min(80vw, 80vh);
+      width: min(90vw, 90vh);
+      height: min(90vw, 90vh);
       transform: translate(-50%, -50%);
       background: rgba(0, 0, 0, 0.5);
       border-radius: 20px;
@@ -70,7 +67,7 @@
       display: block;
     }
 
-    /* (Opsiyonel) Gizli ses kontrolü */
+    /* Gizli müzik kontrolü */
     #bgMusic {
       display: none;
     }
@@ -78,7 +75,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- 1) Ortadaki kare içinde resim -->
+    <!-- 1) Ortadaki resim kutusu -->
     <div class="image-box">
       <img id="bayramImage" alt="Bayram Resmi">
     </div>
@@ -99,7 +96,6 @@
           İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
           İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
           İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
-          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR -
         </textPath>
       </text>
     </svg>
@@ -120,13 +116,12 @@
           İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
           İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
           İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - 
-          İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR - İYİ BAYRAMLAR -
         </textPath>
       </text>
     </svg>
   </div>
 
-  <!-- 4) Arka planda çalacak müzik (Docs → elbi (mp3cut.net).m4a) -->
+  <!-- 4) Arka planda çalan müzik -->
   <audio id="bgMusic"
          src="https://raw.githubusercontent.com/0xSaiph/Eid/main/Docs/elbi%20(mp3cut.net).m4a"
          autoplay
@@ -134,27 +129,17 @@
   </audio>
 
   <script>
-    /*
-      *** ÖNEMLİ ***  
-      GitHub’daki her bir dosyanın “Raw” linkini kesinlikle kopyalayın!
-      - https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/XLpNcLt-shaun-the-sheep.jpg
-      - https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/movie-shaun-the-sheep.jpg
-      - https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper.jpg
-      - https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20(1).jpg
-      - https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20(2).jpg
-      - https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20(3).jpg
-
-      Bu URL’lerin tamamı kesinlikle “Raw” olarak açılan URL’ler olmalı.
-      Parantez ve boşluk karakterlerini URL içinde %28, %29, %20 
-      olarak encode etmeyi unutmayın. Aksi takdirde resimler yüklenmez.
-    */
+    /**
+     * jsDelivr CDN üzerinden resimleri çekiyoruz.
+     * jsDelivr, GitHub dosya isimlerindeki boşluk/parantezi otomatik işleme eğilimindedir.
+     */
     const images = [
-      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/XLpNcLt-shaun-the-sheep.jpg",
-      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/movie-shaun-the-sheep.jpg",
-      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper.jpg",
-      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20(1).jpg",
-      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20(2).jpg",
-      "https://raw.githubusercontent.com/0xSaiph/Eid/main/pics/wallpaperflare.com_wallpaper%20(3).jpg"
+      "https://cdn.jsdelivr.net/gh/0xSaiph/Eid/pics/XLpNcLt-shaun-the-sheep.jpg",
+      "https://cdn.jsdelivr.net/gh/0xSaiph/Eid/pics/movie-shaun-the-sheep.jpg",
+      "https://cdn.jsdelivr.net/gh/0xSaiph/Eid/pics/wallpaperflare.com_wallpaper.jpg",
+      "https://cdn.jsdelivr.net/gh/0xSaiph/Eid/pics/wallpaperflare.com_wallpaper (1).jpg",
+      "https://cdn.jsdelivr.net/gh/0xSaiph/Eid/pics/wallpaperflare.com_wallpaper (2).jpg",
+      "https://cdn.jsdelivr.net/gh/0xSaiph/Eid/pics/wallpaperflare.com_wallpaper (3).jpg"
     ];
 
     let index = 0;
